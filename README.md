@@ -57,6 +57,14 @@ pip install yt-dlp --break-system-packages
 
 ---
 
+## Support
+
+If you enjoy AnimeVault, consider supporting the project:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white)](https://coffee.vincentiwuno.me/)
+
+---
+
 ## Source Code
 
 The source code for this application is private. For issues and feature requests, please [open an issue](https://github.com/Vlex127/Animevault-releases/issues).
