@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnimeVault — Premium Anime Desktop App for Linux</title>
+  <meta name="description" content="Stream, download, and discover anime in a cinematic native desktop app for Linux. Built on Electron with AniList discovery, auto-skip intro/outro, and offline downloads." />
+  <meta name="keywords" content="anime desktop app, anime linux, anime stream, anime download, animepahe, anilist, electron anime app, linux anime player" />
+  <meta name="author" content="Vincent Iwuno" />
+  <link rel="canonical" href="https://animevault.vincentiwuno.me/" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://animevault.vincentiwuno.me/" />
+  <meta property="og:title" content="AnimeVault — Premium Anime Desktop App for Linux" />
+  <meta property="og:description" content="Stream, download, and discover anime in a cinematic native desktop app for Linux. AniList discovery, auto-skip intro/outro, and offline downloads." />
+  <meta property="og:image" content="https://animevault.vincentiwuno.me/preview.png" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:site_name" content="AnimeVault" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AnimeVault — Premium Anime Desktop App for Linux" />
+  <meta name="twitter:description" content="Stream, download, and discover anime in a cinematic native desktop app for Linux." />
+  <meta name="twitter:image" content="https://animevault.vincentiwuno.me/preview.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AnimeVault",
+    "description": "A cinematic native desktop app for discovering, streaming, and downloading anime on Linux.",
+    "url": "https://animevault.vincentiwuno.me/",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Linux",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "softwareVersion": "0.1.0",
+    "screenshot": "https://animevault.vincentiwuno.me/preview.png",
+    "downloadUrl": "https://github.com/Vlex127/Animevault-releases/releases/latest",
+    "fileList": [
+      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/anime_0.1.0_amd64.deb",
+      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/AnimeVault-0.1.0.AppImage"
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Vincent Iwuno"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07070d;
+      --bg-2: #0d0d1a;
+      --bg-card: #10101f;
+      --border: rgba(255,255,255,0.07);
+      --border-bright: rgba(255,255,255,0.14);
+      --accent: #c8a96e;
+      --accent-dim: rgba(200,169,110,0.15);
+      --accent-glow: rgba(200,169,110,0.08);
+      --text: #e8e6e0;
+      --text-2: #9a9488;
+      --text-3: #5a5650;
+      --red: #e05555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    * { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,7,13,0.85);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(200,169,110,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 48ch;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--accent);
+      color: #07070d;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: #d4b87a;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--text-2);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      border: 1px solid var(--border-bright);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .platform-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+      margin-top: 1.5rem;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual {
+      width: min(900px, 90vw);
+      margin: 4rem auto 0;
+      border: 1px solid var(--border-bright);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-card);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+
+    .window-chrome {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .window-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 52ch;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .feature-card:hover { background: rgba(200,169,110,0.04); }
+
+    .feature-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-bright);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.1rem;
+    }
+
+    .feature-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 3rem;
+    }
+
+    /* ── DOWNLOAD ── */
+    .download-section {
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .download-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .download-box {
+      margin-top: 3rem;
+      border: 1px solid var(--border-bright);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .download-header {
+      background: rgba(200,169,110,0.06);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .download-version {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .download-date {
+      font-size: 0.72rem;
+      color: var(--text-3);
+    }
+
+    .download-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .download-row:last-child { border-bottom: none; }
+    .download-row:hover { background: rgba(255,255,255,0.02); }
+
+    .download-info { display: flex; align-items: center; gap: 0.75rem; }
+
+    .download-ext {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      background: var(--border-bright);
+      color: var(--text-2);
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .download-name { font-size: 0.85rem; color: var(--text); }
+    .download-size { font-size: 0.75rem; color: var(--text-3); font-family: 'DM Mono', monospace; }
+
+    .download-arrow {
+      color: var(--text-3);
+      font-size: 1rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .download-row:hover .download-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .install-block {
+      margin-top: 1.5rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .install-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .install-cmd {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .install-cmd span { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text-2); }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: var(--text-3);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">AnimeVault</a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#download">Download</a></li>
+      <li><a href="https://github.com/Vlex127/Animevault-releases" target="_blank">Releases</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <span class="hero-eyebrow">Linux Desktop App</span>
+
+    <h1>Watch Anime<br />the way it<br /><em>deserves</em></h1>
+
+    <p class="hero-sub">
+      A cinematic native desktop experience for discovering, streaming,
+      and downloading anime — built on Electron, powered by AnimePahe.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#download" class="btn-primary">
+        ↓ Download for Linux
+      </a>
+      <a href="https://github.com/Vlex127/Animevault-releases" target="_blank" class="btn-secondary">
+        View releases →
+      </a>
+    </div>
+
+    <p class="platform-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      v0.1.0 · Linux x64 · .deb
+    </p>
+
+    <!-- App preview -->
+    <div class="hero-visual">
+      <div class="window-chrome">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <div class="window-title">AnimeVault</div>
+      </div>
+      <img
+        src="preview.png"
+        alt="AnimeVault desktop app showing anime streaming interface with Continue Watching, Trending Now, and sidebar navigation"
+        style="width:100%;display:block;"
+        loading="eager"
+        width="1280"
+        height="720"
+      />
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── FEATURES ── -->
+  <section class="section" id="features">
+    <p class="section-label">What's inside</p>
+    <h2>Built for the<br />serious viewer</h2>
+    <p class="section-sub">
+      Every feature designed around the experience of watching anime,
+      not around looking like a dashboard.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎬</div>
+        <div class="feature-title">Cinematic Player</div>
+        <p class="feature-desc">Custom HLS player with quality selection, subtitle/dub switching, auto-skip intro/outro via AniSkip, PiP, and keyboard shortcuts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">↓</div>
+        <div class="feature-title">Native Downloads</div>
+        <p class="feature-desc">Download episodes via yt-dlp with real-time progress, pause/resume support, and automatic retry on failure.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <div class="feature-title">AniList Discovery</div>
+        <p class="feature-desc">Browse trending, seasonal, and genre-filtered anime powered by AniList's GraphQL API with rich metadata and artwork.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◎</div>
+        <div class="feature-title">Watch History</div>
+        <p class="feature-desc">Per-episode progress saved locally. Resume from exactly where you left off across sessions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☰</div>
+        <div class="feature-title">Your Library</div>
+        <p class="feature-desc">Organize anime into My List, Favorites, Watching, Completed, and custom Collections.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">▶️</div>
+        <div class="feature-title">AnimePahe Stream</div>
+        <p class="feature-desc">Direct HLS streaming from AnimePahe with 360p, 720p, and 1080p quality options. Sub and dub where available.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── DOWNLOAD ── -->
+  <section class="download-section" id="download">
+    <div class="download-inner">
+      <p class="section-label">Get the app</p>
+      <h2>Download<br />AnimeVault</h2>
+      <p class="section-sub" style="margin: 0 auto 0;">
+        Linux only for now. Requires AnimePahe connection for streaming.
+        yt-dlp required for downloads.
+      </p>
+
+      <div class="download-box">
+        <div class="download-header">
+          <span class="download-version">v0.1.0 — Latest</span>
+          <span class="download-date">2026</span>
+        </div>
+
+        <a
+          class="download-row"
+          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/anime_0.1.0_amd64.deb"
+          target="_blank"
+        >
+          <div class="download-info">
+            <span class="download-ext">.deb</span>
+            <span class="download-name">anime_0.1.0_amd64.deb</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="download-size">~118 MB</span>
+            <span class="download-arrow">→</span>
+          </div>
+        </a>
+
+        <a
+          class="download-row"
+          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/AnimeVault-0.1.0.AppImage"
+          target="_blank"
+        >
+          <div class="download-info">
+            <span class="download-ext">.AppImage</span>
+            <span class="download-name">anime_0.1.0_amd64.AppImage</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="download-size">~120 MB</span>
+            <span class="download-arrow">→</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="install-block">
+        <div class="install-label">Install .deb on Debian / Ubuntu / Kali</div>
+        <div class="install-cmd">
+          <span>$</span> sudo apt install ./anime_0.1.0_amd64.deb
+        </div>
+      </div>
+
+      <div class="install-block" style="margin-top:0.75rem;">
+        <div class="install-label">Prerequisite — yt-dlp (for downloads)</div>
+        <div class="install-cmd">
+          <span>$</span> pip install yt-dlp --break-system-packages
+        </div>
+      </div>
+
+      <p style="font-size:0.72rem;color:var(--text-3);margin-top:1.5rem;line-height:1.7;">
+        All releases available on
+        <a href="https://github.com/Vlex127/Animevault-releases" target="_blank" style="color:var(--text-2);text-decoration:none;border-bottom:1px solid var(--border-bright);">GitHub Releases</a>.
+        Source code is private.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-logo">AnimeVault</span>
+    <ul class="footer-links">
+      <li><a href="https://github.com/Vlex127/Animevault-releases" target="_blank">Releases</a></li>
+      <li><a href="https://github.com/Vlex127/Animevault-releases/issues" target="_blank">Issues</a></li>
+    </ul>
+    <span class="footer-copy">For personal use only.</span>
+  </footer>
+
+</body>
+</html>
