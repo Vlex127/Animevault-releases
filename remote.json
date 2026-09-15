@@ -1,5 +1,5 @@
 {
-  "blocked": true,
+  "blocked": false,
   "announcement": null,
   "minVersion": null,
   "latestVersion": "0.1.0",
