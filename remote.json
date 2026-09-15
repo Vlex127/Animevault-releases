@@ -1,9 +1,6 @@
 {
-  "blocked": false,
-  "announcement": {
-    "title": "Under Development",
-    "message": "We are testing new features. Some functionality may be limited."
-  },
+  "blocked": true,
+  "announcement": null,
   "minVersion": null,
   "latestVersion": "0.1.0",
   "updateUrl": "https://github.com/Vlex127/Animevault-releases/releases/latest"
