@@ -12,8 +12,8 @@
   <a href="https://github.com/Vlex127/Animevault-releases/releases/latest">
     <img src="https://img.shields.io/github/v/release/Vlex127/Animevault-releases?style=flat-square&color=c8a96e" alt="Latest Release" />
   </a>
-  <img src="https://img.shields.io/badge/platform-linux-x64-222?style=flat-square&logo=linux&logoColor=white" alt="Platform" />
-  <img src="https://img.shields.io/badge/license-MIT-222?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/platform-linux--x64-brightgreen?style=flat-square" alt="Platform" />
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License" />
 </p>
 
 ---
