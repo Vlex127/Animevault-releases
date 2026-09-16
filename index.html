@@ -258,14 +258,20 @@
 
     /* ── HERO VISUAL ── */
     .hero-visual {
-      width: min(900px, 90vw);
-      margin: 4rem auto 0;
+      width: min(900px, 92vw);
+      margin: 3rem auto 0;
       border: 1px solid var(--border-bright);
       border-radius: 8px;
       overflow: hidden;
       background: var(--bg-card);
       box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
       animation: fadeUp 0.8s 0.5s ease both;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .window-chrome {
@@ -530,6 +536,11 @@
     @media (max-width: 700px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
+      .hero { padding: 6rem 1.25rem 3rem; }
+      .hero-visual { width: 95vw; margin-top: 2rem; border-radius: 6px; }
+      .window-chrome { padding: 0.5rem 0.75rem; }
+      .section { padding: 4rem 1.25rem; }
+      .features-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; }
     }
   </style>
@@ -581,10 +592,9 @@
       <img
         src="preview.png"
         alt="AnimeVault desktop app showing anime streaming interface with Continue Watching, Trending Now, and sidebar navigation"
-        style="width:100%;display:block;"
         loading="eager"
         width="1280"
-        height="720"
+        height="826"
       />
     </div>
   </section>
