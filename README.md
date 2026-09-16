@@ -22,20 +22,20 @@
 
 | Format | File | Size |
 |--------|------|------|
-| `.deb` | [anime_0.1.0_amd64.deb](https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/anime_0.1.0_amd64.deb) | ~118 MB |
-| `.AppImage` | [AnimeVault-0.1.0.AppImage](https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/AnimeVault-0.1.0.AppImage) | ~120 MB |
+| `.deb` | [anime_0.2.0_amd64.deb](https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/anime_0.2.0_amd64.deb) | ~118 MB |
+| `.AppImage` | [AnimeVault-0.2.0.AppImage](https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/AnimeVault-0.2.0.AppImage) | ~120 MB |
 
 ### Install .deb (Debian / Ubuntu / Kali)
 
 ```bash
-sudo apt install ./anime_0.1.0_amd64.deb
+sudo apt install ./anime_0.2.0_amd64.deb
 ```
 
 ### Run AppImage
 
 ```bash
-chmod +x AnimeVault-0.1.0.AppImage
-./AnimeVault-0.1.0.AppImage
+chmod +x AnimeVault-0.2.0.AppImage
+./AnimeVault-0.2.0.AppImage
 ```
 
 ### Prerequisite — yt-dlp (for downloads)
