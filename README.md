@@ -1,75 +1,77 @@
-<p align="center">
-  <img src="preview.png" alt="AnimeVault Preview" width="100%" />
-</p>
+# AnimeVault
 
-<h1 align="center">AnimeVault</h1>
+A cinematic native desktop app for discovering, streaming, and downloading anime — built on Electron, powered by AnimePahe.
 
-<p align="center">
-  A cinematic native desktop app for discovering, streaming, and downloading anime — built on Electron, powered by AnimePahe.
-</p>
+## Stack
 
-<p align="center">
-  <a href="https://github.com/Vlex127/Animevault-releases/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Vlex127/Animevault-releases?style=flat-square&color=c8a96e" alt="Latest Release" />
-  </a>
-  <img src="https://img.shields.io/badge/platform-linux-x64-222?style=flat-square&logo=linux&logoColor=white" alt="Platform" />
-  <img src="https://img.shields.io/badge/license-MIT-222?style=flat-square" alt="License" />
-</p>
-
----
-
-## Download
-
-| Format | File | Size |
-|--------|------|------|
-| `.deb` | [anime_0.1.0_amd64.deb](https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/anime_0.1.0_amd64.deb) | ~118 MB |
-| `.AppImage` | [AnimeVault-0.1.0.AppImage](https://github.com/Vlex127/Animevault-releases/releases/download/v0.1.0/AnimeVault-0.1.0.AppImage) | ~120 MB |
-
-### Install .deb (Debian / Ubuntu / Kali)
-
-```bash
-sudo apt install ./anime_0.1.0_amd64.deb
-```
-
-### Run AppImage
-
-```bash
-chmod +x AnimeVault-0.1.0.AppImage
-./AnimeVault-0.1.0.AppImage
-```
-
-### Prerequisite — yt-dlp (for downloads)
-
-```bash
-pip install yt-dlp --break-system-packages
-```
-
----
+- **Electron + electron-vite** — main/preload/renderer build pipeline
+- **React 19 + TypeScript** — renderer UI
+- **Tailwind CSS + Radix UI** — styling and headless components
+- **Zustand** — renderer state management
+- **Drizzle ORM + better-sqlite3** — local SQLite persistence
+- **yt-dlp** — download engine
+- **hls.js** — HLS video streaming
 
 ## Features
 
-- **Cinematic Player** — Custom HLS player with quality selection, subtitle/dub switching, auto-skip intro/outro via AniSkip, PiP, and keyboard shortcuts
-- **Native Downloads** — Download episodes via yt-dlp with real-time progress, pause/resume, and automatic retry
-- **AniList Discovery** — Browse trending, seasonal, and genre-filtered anime with rich metadata and artwork
-- **Watch History** — Per-episode progress saved locally. Resume from where you left off
-- **Your Library** — Organize anime into My List, Favorites, Watching, Completed, and custom Collections
-- **AnimePahe Stream** — Direct HLS streaming with 360p, 720p, and 1080p quality options
+- **Cinematic Player** — HLS streaming with quality selection, subtitle/dub switching, auto-skip intro/outro via AniSkip, PiP, keyboard shortcuts
+- **Native Downloads** — Download episodes via yt-dlp with real-time progress, pause/resume, configurable download location
+- **AniList Discovery** — Trending, seasonal, and genre-filtered anime with rich metadata
+- **Watch History** — Per-episode progress, resume from where you left off
+- **My List & Collections** — Organize anime into Watching, Completed, Favorites, and custom collections
+- **Remote Config** — Kill switch and announcements via GitHub-hosted JSON
+- **Buy Me a Coffee** — Support the project
 
----
+## Getting started
 
-## Support
+```bash
+pnpm install
+pnpm dev
+```
 
-If you enjoy AnimeVault, consider supporting the project:
+## Building
 
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-yellow?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white)](https://coffee.vincentiwuno.me/)
+```bash
+pnpm build                    # production build
+pnpm dist --linux deb         # .deb package
+pnpm dist --linux AppImage    # .AppImage
+pnpm dist --linux deb AppImage --publish never  # both
+```
 
----
+## Releases
 
-## Source Code
+Releases are built via GitHub Actions on tag push:
 
-The source code for this application is private. For issues and feature requests, please [open an issue](https://github.com/Vlex127/Animevault-releases/issues).
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
 
----
+Builds publish to the [releases repo](https://github.com/Vlex127/Animevault-releases).
+
+## Structure
+
+```
+src/
+  main/               # Electron main process
+    db/               # Drizzle schema + migrations
+    ipc/              # IPC handlers (anime, library, downloads, settings, etc.)
+    providers/        # AnimePahe + AniList API clients
+    services/         # Business logic (anime, aniskip, download-manager, remote-config)
+    index.ts          # App entry, window creation, file server
+  preload/            # contextBridge API
+  renderer/           # React UI
+    src/
+      components/     # Reusable components (block-screen, announcement-modal, etc.)
+      features/       # Feature modules (search overlay)
+      pages/          # Page components (home, discover, player, settings, etc.)
+      stores/         # Zustand stores
+  shared/             # Types, schemas, constants (IPC channels)
+```
+
+## Landing page
+
+`index.html` in the project root — deployed on Vercel at [animevault.vincentiwuno.me](https://animevault.vincentiwuno.me).
 
 ## License
 
