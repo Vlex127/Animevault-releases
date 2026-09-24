@@ -45,12 +45,13 @@
       "price": "0",
       "priceCurrency": "USD"
     },
-    "softwareVersion": "0.2.0",
+    "softwareVersion": "0.4.0",
     "screenshot": "https://animevault.vincentiwuno.me/preview.png",
     "downloadUrl": "https://github.com/Vlex127/Animevault-releases/releases/latest",
     "fileList": [
-      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/anime_0.2.0_amd64.deb",
-      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/AnimeVault-0.2.0.AppImage"
+      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/anime_0.4.0_amd64.deb",
+      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/AnimeVault-0.4.0.AppImage",
+      "https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/AnimeVault-linux-x64.tar.gz"
     ],
     "author": {
       "@type": "Person",
@@ -578,7 +579,7 @@
 
     <p class="platform-tag">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      v0.2.0 · Linux x64 · .deb
+      v0.4.0 · Linux x64 · .deb / .AppImage / .tar.gz
     </p>
 
     <!-- App preview -->
@@ -658,18 +659,18 @@
 
       <div class="download-box">
         <div class="download-header">
-          <span class="download-version">v0.2.0 — Latest</span>
+          <span class="download-version">v0.4.0 — Latest</span>
           <span class="download-date">2026</span>
         </div>
 
         <a
           class="download-row"
-          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/anime_0.2.0_amd64.deb"
+          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/anime_0.4.0_amd64.deb"
           target="_blank"
         >
           <div class="download-info">
             <span class="download-ext">.deb</span>
-            <span class="download-name">anime_0.2.0_amd64.deb</span>
+            <span class="download-name">anime_0.4.0_amd64.deb</span>
           </div>
           <div style="display:flex;align-items:center;gap:1rem;">
             <span class="download-size">~118 MB</span>
@@ -679,24 +680,53 @@
 
         <a
           class="download-row"
-          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.2.0/AnimeVault-0.2.0.AppImage"
+          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/AnimeVault-0.4.0.AppImage"
           target="_blank"
         >
           <div class="download-info">
             <span class="download-ext">.AppImage</span>
-            <span class="download-name">anime_0.2.0_amd64.AppImage</span>
+            <span class="download-name">AnimeVault-0.4.0.AppImage</span>
           </div>
           <div style="display:flex;align-items:center;gap:1rem;">
             <span class="download-size">~120 MB</span>
             <span class="download-arrow">→</span>
           </div>
         </a>
+
+        <a
+          class="download-row"
+          href="https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.0/AnimeVault-linux-x64.tar.gz"
+          target="_blank"
+        >
+          <div class="download-info">
+            <span class="download-ext">.tar.gz</span>
+            <span class="download-name">AnimeVault-linux-x64.tar.gz</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="download-size">~115 MB</span>
+            <span class="download-arrow">→</span>
+          </div>
+        </a>
       </div>
 
       <div class="install-block">
+        <div class="install-label">Install with one command (no sudo required)</div>
+        <div class="install-cmd">
+          <span>$</span> curl -fSL https://animevault.vincentiwuno.me/install.sh | bash
+        </div>
+      </div>
+
+      <div class="install-block" style="margin-top:0.75rem;">
+        <div class="install-label">Alternative (GitHub mirror)</div>
+        <div class="install-cmd">
+          <span>$</span> curl -fSL https://raw.githubusercontent.com/Vlex127/Animevault-releases/main/install.sh | bash
+        </div>
+      </div>
+
+      <div class="install-block" style="margin-top:0.75rem;">
         <div class="install-label">Install .deb on Debian / Ubuntu / Kali</div>
         <div class="install-cmd">
-          <span>$</span> sudo apt install ./anime_0.2.0_amd64.deb
+          <span>$</span> sudo apt install ./anime_0.4.0_amd64.deb
         </div>
       </div>
 
