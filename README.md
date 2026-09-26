@@ -22,9 +22,9 @@
 
 | Format | File | Size |
 |--------|------|------|
-| `.deb` | [anime_0.4.1_amd64.deb](https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.1/anime_0.4.1_amd64.deb) | ~111 MB |
-| `.AppImage` | [AnimeVault-0.4.1.AppImage](https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.1/AnimeVault-0.4.1.AppImage) | ~145 MB |
-| `.tar.gz` | [AnimeVault-linux-x64.tar.gz](https://github.com/Vlex127/Animevault-releases/releases/download/v0.4.1/AnimeVault-linux-x64.tar.gz) | ~142 MB |
+| `.deb` | [anime_0.5.0_amd64.deb](https://github.com/Vlex127/Animevault-releases/releases/download/v0.5.0/anime_0.5.0_amd64.deb) | ~112 MB |
+| `.AppImage` | [AnimeVault-0.5.0.AppImage](https://github.com/Vlex127/Animevault-releases/releases/download/v0.5.0/AnimeVault-0.5.0.AppImage) | ~145 MB |
+| `.tar.gz` | [AnimeVault-linux-x64.tar.gz](https://github.com/Vlex127/Animevault-releases/releases/download/v0.5.0/AnimeVault-linux-x64.tar.gz) | ~142 MB |
 
 ### Install with one command (no sudo required)
 
@@ -37,14 +37,14 @@ To update, re-run the same command.
 ### Install .deb (Debian / Ubuntu / Kali)
 
 ```bash
-sudo apt install ./anime_0.4.1_amd64.deb
+sudo apt install ./anime_0.5.0_amd64.deb
 ```
 
 ### Run AppImage
 
 ```bash
-chmod +x AnimeVault-0.4.1.AppImage
-./AnimeVault-0.4.1.AppImage
+chmod +x AnimeVault-0.5.0.AppImage
+./AnimeVault-0.5.0.AppImage
 ```
 
 ### Prerequisite — yt-dlp (for downloads)
@@ -52,6 +52,12 @@ chmod +x AnimeVault-0.4.1.AppImage
 ```bash
 pip install yt-dlp --break-system-packages
 ```
+
+---
+
+## Documentation
+
+New here? The **[User Guide](GUIDE.md)** covers everything: connecting to AnimePahe, player controls and keyboard shortcuts, downloads, your library, notifications, updating, and troubleshooting.
 
 ---
 
